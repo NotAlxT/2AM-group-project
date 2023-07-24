@@ -1,9 +1,6 @@
 import React from "react";
 import "../Hero/Hero.css";
 import "../Wishlist/Wishlist.css";
-import greenDress from "../../Images/greenDress1.webp";
-import shirt1 from "../../Images/shirt1.webp";
-import Shoe from "../../Images/shoe7.webp";
 import { Link } from 'react-router-dom';
 import { useContext } from "react";
 import { useEffect, useState } from "react";
@@ -25,7 +22,7 @@ function Cart() {
 			setCart(newCart);
 		}
 		settingCart();
-	}, []);
+	}, [actions]);
   console.log(cart)
 
   

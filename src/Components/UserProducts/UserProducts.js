@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../Store/appContext";
 import { ProductUpload } from "../ProductUploads/ProductUploads";
 import "./UserProducts.css";
@@ -17,7 +17,8 @@ export const UserProducts = () => {
       setUserInfo(newInfo);
     }
     settingUserInfo();
-  }, []);
+    userInfo();
+  });
 
   useEffect(() => {
     async function settingProducts() {
@@ -25,7 +26,7 @@ export const UserProducts = () => {
       setUserProducts(newUserProducts);
     }
     settingProducts();
-  }, []);
+  });
 
   return (
     <>
@@ -86,7 +87,7 @@ export const UserProducts = () => {
                     >
                       <div className="carousel-indicators">
                         {item?.image_paths?.map((image, index) => {
-                          if (index == 0) {
+                          if (index === 0) {
                             return (
                               <button
                                 type="button"
@@ -111,7 +112,7 @@ export const UserProducts = () => {
                       </div>
                       <div className="carousel-inner">
                         {item?.image_paths?.map((image, index) => {
-                          if (index == 0) {
+                          if (index === 0) {
                             console.log(image);
                             return (
                               <div className=" carousel-item  active">

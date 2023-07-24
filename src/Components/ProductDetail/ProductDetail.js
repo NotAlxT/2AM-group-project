@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { get_product_details } from "../../asosApi";
+// import { get_product_details } from "../../asosApi";
 import "../../Components/ProductDetail/ProductDetail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/fontawesome-free-regular";
@@ -20,7 +20,7 @@ export const ProductDetail = () => {
       setInfo(products);
     }
     settingInfo();
-  }, []);
+  });
  
 console.log(info)
 
@@ -32,7 +32,7 @@ console.log(info)
       >
         <div className="carousel-indicators">
           {info?.filename.split(",").map((item, index) => {
-            if (index == 0) {
+            if (index === 0) {
               return (
                 <button
                   type="button"
@@ -58,7 +58,7 @@ console.log(info)
         <div className="carousel-inner">
           {info?.filename.split(",").map((item, index) => {
 
-            if (index == 0) {
+            if (index === 0) {
               return (
                 <div className="carousel-item object-fit-fill active">
                   <img
@@ -214,7 +214,7 @@ console.log(info)
                       };
                       actions.add_to_wishlist(newItem);
 
-                      if (store.isAuthenticated == true) {
+                      if (store.isAuthenticated === true) {
                         alert("Sucessfully added!");
                       } else {
                         alert("Please Login");

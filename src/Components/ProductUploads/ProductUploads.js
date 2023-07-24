@@ -9,7 +9,7 @@ import { Context } from "../../Store/appContext";
  */
 
 export const ProductUpload = () => {
-  const [progress, setProgress] = useState(0);
+  const [progress] = useState(0);
   const productForm = useRef();
   const { actions } = useContext(Context);
   const [selectedOption, setSelectedOption] = useState("");
@@ -23,7 +23,7 @@ useEffect(()=>{
     setUserInfo(newInfo)
   }
   settingInfo()
-},[])
+})
 
   const handleProductSubmit = async (event) => {
     event.preventDefault();

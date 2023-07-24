@@ -3,8 +3,6 @@ import "./Checkout.css";
 import { Link } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { Context } from "../../Store/appContext";
-import { receipt } from "../../receiptApi";
-import { generate_receipt } from "../../receiptApi";
 
 /**
  * This function displays Square cards for product segments right below the Bestsellers section.
@@ -15,23 +13,23 @@ import { generate_receipt } from "../../receiptApi";
 
 function Checkout() {
   const { actions } = useContext(Context);
-    const [cart, setCart]=useState()
+  const [cart, setCart] = useState()
   const [name, setName] = useState();
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
-  const [addressInfo, setAddressInfo]=useState({
+  const [addressInfo, setAddressInfo] = useState({
     address: '',
     city: '',
     state: '',
     zip: '',
   })
-  const [buyerInfo, setBuyerInfo]=useState({
+  const [buyerInfo, setBuyerInfo] = useState({
     first_name: '',
-    last_name:'',
-    email:'',
+    last_name: '',
+    email: '',
   })
-  
-  
+
+
   const handleChange = (property) => (event) => {
     const value = event.target.value;
     setAddressInfo((prevState) => ({
@@ -46,33 +44,33 @@ function Checkout() {
       [property]: value,
     }));
   };
-const handlesubmit=()=>{
-cart.map((item)=>{
-const data= new FormData()
-data.append("buyer_name", buyerInfo.first_name +" "+ buyerInfo.last_name)
-data.append("buyer_shipping", addressInfo.address+ ", " +addressInfo.city + ", " + addressInfo.state + ", " + addressInfo.zip)
-data.append("fullfillment_status", false)
-data.append("product_id", item.product_id)
-data.append("seller_id", item.seller_id)
-actions.add_to_sales(data)
-actions.add_to_purchases(item)
-
-})
-actions.clear_cart()
-// const newReceipt= receipt(buyerInfo, addressInfo, cart)
-//   console.log(newReceipt)
-//   generate_receipt(newReceipt)
-}
-
-  useEffect(()=>{
-  async function settingCart(){
-    let newCart= await actions.get_user_cart()
-    setCart(newCart)
+  const handlesubmit = () => {
+    cart.map((item) => {
+      const data = new FormData()
+      data.append("buyer_name", buyerInfo.first_name + " " + buyerInfo.last_name)
+      data.append("buyer_shipping", addressInfo.address + ", " + addressInfo.city + ", " + addressInfo.state + ", " + addressInfo.zip)
+      data.append("fullfillment_status", false)
+      data.append("product_id", item.product_id)
+      data.append("seller_id", item.seller_id)
+      actions.add_to_sales(data)
+      actions.add_to_purchases(item)
+      return null
+    })
+    actions.clear_cart()
+    // const newReceipt= receipt(buyerInfo, addressInfo, cart)
+    //   console.log(newReceipt)
+    //   generate_receipt(newReceipt)
   }
-  settingCart()
-  },[])
 
-  
+  useEffect(() => {
+    async function settingCart() {
+      let newCart = await actions.get_user_cart()
+      setCart(newCart)
+    }
+    settingCart()
+  }, [actions])
+
+
   return (
     <div className="checkout-container container-fluid">
       <div className="py-5">
@@ -92,7 +90,7 @@ actions.clear_cart()
                           id="form3Example1m"
                           class="form-control form-control-lg"
                           onChange={handleBuyer('first_name')}
-                          
+
                         />
                         <label floating for="form3Example1m">
                           First Name
@@ -106,7 +104,7 @@ actions.clear_cart()
                           id="form3Example1n"
                           class="form-control form-control-lg"
                           onChange={handleBuyer('last_name')}
-                        
+
                         />
                         <label floatingfor="form3Example1n">
                           Last Name
@@ -131,31 +129,31 @@ actions.clear_cart()
 
                   <div class="row">
                     <div class="col-md-6 form-floating mb-4">
-                    
-                    <input
-                      type="text"
-                      id="form3Example3"
-                      class="form-control"
-                      onChange={handleChange('city')}
-                    
-                    />
-                    <label for="form3Example3">
-                    City
-                    </label>
-                 
+
+                      <input
+                        type="text"
+                        id="form3Example3"
+                        class="form-control"
+                        onChange={handleChange('city')}
+
+                      />
+                      <label for="form3Example3">
+                        City
+                      </label>
+
                     </div>
                     <div class="col-md-6 form-floating mb-4">
-                    
-                    <input
-                      type="text"
-                      id="form3Example3"
-                      class="form-control"
-                      onChange={handleChange('state')}
-                    
-                    />
-                    <label for="form3Example3">
-                    State
-                    </label>
+
+                      <input
+                        type="text"
+                        id="form3Example3"
+                        class="form-control"
+                        onChange={handleChange('state')}
+
+                      />
+                      <label for="form3Example3">
+                        State
+                      </label>
                     </div>
                   </div>
 
@@ -165,7 +163,7 @@ actions.clear_cart()
                       id="form3Example3"
                       class="form-control form-control-lg"
                       onChange={handleChange('zip')}
-                    
+
                     />
                     <label for="form3Example3">
                       Zip
@@ -178,14 +176,14 @@ actions.clear_cart()
                       id="form3Example2"
                       class="form-control form-control-lg"
                       onChange={handleBuyer('email')}
-                    
+
                     />
                     <label for="form3Example2">
                       Email
                     </label>
                   </div>
 
-                  
+
                 </div>
               </div>
             </div>
@@ -217,6 +215,7 @@ actions.clear_cart()
 
                   <div className="d-flex justify-content-center  align-items-center flex-column">
                     <img
+                      alt=""
                       src="https://img.icons8.com/color/96/000000/mastercard-logo.png"
                       width="40"
                       className="relative right-5"
@@ -277,7 +276,7 @@ actions.clear_cart()
                 </div>
 
                 <button onClick={handlesubmit} className="checkout-button w-100 rounded  hover:bg-blue-600">
-                 <Link to="/fulfilment"> Check Out</Link>
+                  <Link to="/fulfilment"> Check Out</Link>
                 </button>
               </div>
             </div>

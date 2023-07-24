@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../Store/appContext";
 import "./UserVideos.css";
 
@@ -59,7 +59,7 @@ console.log(data)
                   <div className="review-header">
                     <h5 className="review-title">{item?.name}</h5>
                     <div className="review-body">
-                    <img className="review-product-picture" src={productImgUrl + array[0]} />
+                    <img alt="" className="review-product-picture" src={productImgUrl + array[0]} />
                     <p>Product Name: {item?.product.name}</p>
                     <p>Sold by: {item?.product.seller_name}</p>
                       <p className="card-text">Your Review Description: {item.description}</p>

@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import "./Nav.css";
-import logoLight from "../../Images/logoLight.png";
-import user from "../../Images/user.png";
-import cart from "../../Images/cart.png";
-import wishlist from "../../Images/wishlist-icon.png";
+// import logoLight from "../../Images/logoLight.png";
+// import user from "../../Images/user.png";
+// import cart from "../../Images/cart.png";
+// import wishlist from "../../Images/wishlist-icon.png";
 import logo from "../../Images/logo.png";
 import { Link } from "react-router-dom";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
@@ -17,8 +17,8 @@ import { Context } from "../../Store/appContext";
 import { Logout } from "../../Logout";
 
 function Nav() {
-  const [womenCategories, setWomenCategories] = useState([]);
-  const [menCategories, setMenCategories] = useState([]);
+  const [ setWomenCategories] = useState([]);
+  const [ setMenCategories] = useState([]);
   const { store } = useContext(Context);
   useEffect(() => {
     async function settingCategory() {
@@ -26,22 +26,22 @@ function Nav() {
       setWomenCategories(newcategories);
     }
     settingCategory();
-  }, []);
+  });
   useEffect(() => {
     async function settingCategory() {
       let newcategories = await get_men_categories();
       setMenCategories(newcategories);
     }
     settingCategory();
-  }, []);
+  });
 
-  const handleLogin = () => {
-    if (store.isAuthenticated == true) {
-      return "/profile";
-    } else {
-      return "/signin";
-    }
-  };
+  // const handleLogin = () => {
+  //   if (store.isAuthenticated == true) {
+  //     return "/profile";
+  //   } else {
+  //     return "/signin";
+  //   }
+  // };
   return (
     <>
       <div className="nav">
@@ -56,7 +56,7 @@ function Nav() {
             />
             <button className="search-btn">Search</button>
           </div>
-          {store.isAuthenticated == true ? (
+          {store.isAuthenticated === true ? (
             <Link to="/profile ">
               <FontAwesomeIcon className="login" icon={faUserCircle} />
             </Link>

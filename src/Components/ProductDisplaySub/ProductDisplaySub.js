@@ -6,21 +6,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Context } from "../../Store/appContext";
 
 import "../../Components/ProductDisplay/ProductDisplay.css";
-import wishlist from "../../Images/wishlist-icon.png";
+// import wishlist from "../../Images/wishlist-icon.png";
 import { faBookmark } from "@fortawesome/fontawesome-free-regular";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { Accessories } from "../Accessories/Accessories";
-import Cart from "../Cart/Cart";
+// import axios from "axios";
+// import { Accessories } from "../Accessories/Accessories";
+// import Cart from "../Cart/Cart";
 
 export const SubCatDisplay = () => {
   const { store, actions } = useContext(Context);
   const [info, setInfo] = useState([]);
   
-  const [productType, setProductType] = useState();
+  // const [productType, setProductType] = useState();
 
-  const localStorageKey = "info_key";
+  // const localStorageKey = "info_key";
   const productImgUrl =
   "https://ashleylem.pythonanywhere.com/product/images/";
   const { id, subcategory } = useParams();
@@ -31,7 +31,7 @@ export const SubCatDisplay = () => {
       setInfo(newInfo)
     }
     settingInfo()
-  }, [subcategory]);
+  }, [id, subcategory, actions]);
   console.log(info)
 
   // useEffect(()=>{
@@ -45,16 +45,16 @@ export const SubCatDisplay = () => {
       <div className="women-container d-flex flex-row container-fluid">
         <div className="col-3 position-relative filters-column ">
           <div className="filters-container p-2 mt-4 me-4">
-         { id=="Men" ?(<> <div className="category-links"><Link to={"/products/Men/Jackets"}>Jackets</Link>  </div>    
+         { id ==="Men" ?(<> <div className="category-links"><Link to={"/products/Men/Jackets"}>Jackets</Link>  </div>    
            <div className="category-links"><Link to={"/products/Men/Bottoms"}>Bottoms</Link> </div> 
            <div className="category-links"><Link to={"/products/Men/Tops"}>Tops</Link></div>  </> ) :
-          id=="Women"? (<><div className="category-links"> <Link to={"/products/Women/Dresses"}>Dresses</Link>    </div>  
+          id ==="Women"? (<><div className="category-links"> <Link to={"/products/Women/Dresses"}>Dresses</Link>    </div>  
           <div className="category-links"> <Link to={"/products/Women/Bottoms"}>Bottoms</Link> </div>
           <div className="category-links"> <Link to={"/products/Women/Tops"}>Tops</Link></div> </> ):
-        id=="Home-Products"?(<><div className="category-links"> <Link to={"/products/Home-Products/Furniture"}>Furniture</Link>      </div>
+        id ==="Home-Products"?(<><div className="category-links"> <Link to={"/products/Home-Products/Furniture"}>Furniture</Link>      </div>
         <div className="category-links">  <Link to={"/products/Home-Products/Home-Decor"}>Home-Decor</Link> </div>
         <div className="category-links"> <Link to={"/products/Home-Products/Kitchen"}>Kitchen</Link></div> </> ):
-      id=="Accessories"? (<><div className="category-links"> <Link to={"/products/Accessories/Jewelry"}>Jewelry</Link> </div>     
+      id ==="Accessories"? (<><div className="category-links"> <Link to={"/products/Accessories/Jewelry"}>Jewelry</Link> </div>     
       <div className="category-links"> <Link to={"/products/Accessories/Bags"}>Bags</Link> </div>
       <div className="category-links"> <Link to={"/products/Accessories/Sunglasses"}>Sunglasses</Link> </div></> ): null }
           </div>
@@ -89,7 +89,7 @@ export const SubCatDisplay = () => {
                         actions.add_to_cart(newItem);
                         
 
-                        if (store.isAuthenticated == true) {
+                        if (store.isAuthenticated === true) {
                           alert("Sucessfully added!");
                         } else {
                           alert("Please Login");
@@ -123,7 +123,7 @@ export const SubCatDisplay = () => {
                         };
                         actions.add_to_wishlist(newItem);
 
-                        if (store.isAuthenticated == true) {
+                        if (store.isAuthenticated === true) {
                           alert("Sucessfully added!");
                         } else {
                           alert("Please Login");

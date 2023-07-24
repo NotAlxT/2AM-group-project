@@ -3,9 +3,9 @@ import "../Hero/Hero.css";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Wishlist.css";
-import greenDress from "../../Images/greenDress1.webp";
-import shirt1 from "../../Images/shirt1.webp";
-import Shoe from "../../Images/shoe7.webp";
+// import greenDress from "../../Images/greenDress1.webp";
+// import shirt1 from "../../Images/shirt1.webp";
+// import Shoe from "../../Images/shoe7.webp";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../Store/appContext";
 /**
@@ -24,7 +24,7 @@ function Wishlist() {
       setWishlist(newWishlist);
     }
     settingWishlist();
-  }, []);
+  });
 
   return (
     <div className="cart-wrap">

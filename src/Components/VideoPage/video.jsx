@@ -215,7 +215,9 @@ export const Video = () => {
         .catch((error) => console.log(error));
     }
     settingVideoInfo();
-  }, [categoryName]);
+  }
+  // , [categoryName]
+  );
 
   console.log(videoInfo);
 
@@ -257,10 +259,11 @@ export const Video = () => {
                     alt="my test video"
                   />:
                   <div className="react-video-thumbnail-image">
-                <img className="review-thumbnail" src={productImgUrl + array[0]}></img></div>
+                <img className="review-thumbnail" alt="" src={productImgUrl + array[0]}></img></div>
                 }
                   <div className="d-flex">
                     <img
+                    alt=""
                       className="review-img pe-2 pt-2"
                       src={productImgUrl + array[0]}
                     ></img>
@@ -293,6 +296,7 @@ export const Video = () => {
                         <div className=" d-flex">
                     
                             <img
+                            alt=""
                               className="rounded"
                               src={productImgUrl + array[0]}
                             ></img>
@@ -303,7 +307,7 @@ export const Video = () => {
                               key={videoInfo.product_id}
                               videoData={item}
                             />:
-                            <img src={apiImgUrl+item.filename }></img>
+                            <img alt="" src={apiImgUrl+item.filename }></img>
                           
                           }
                             <div className="rounded my-2 px-2 pb-2  review-user-info">

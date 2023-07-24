@@ -21,7 +21,7 @@ export const ReviewUpload=()=>{
       setPurchases(newPurchase);
     }
     settingPurchases();
-  }, []);
+  });
   console.log(purchases)
 
   const handleSubmit = async (event) => {
@@ -29,9 +29,10 @@ export const ReviewUpload=()=>{
     const data = new FormData(formRef.current);
     data.append("userId", localStorage.getItem("user-id"));
     purchases.map((item) => {
-      if (item.product_id == data.get("product_id")) {
+      if (item.product_id === data.get("product_id")) {
         return data.append("picture", item.picture);
       }
+      return ''
     });
 
     const xhr = new XMLHttpRequest();

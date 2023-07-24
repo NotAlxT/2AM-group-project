@@ -15,7 +15,7 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import ReactJoyride from "react-joyride";
 import VideoImageThumbnail from "react-video-thumbnail-image";
 
-import VideoThumbnail from "../VideoThumbnail";
+// import VideoThumbnail from "../VideoThumbnail";
 
 export const Profile = () => {
   const [userVideos, setUserVideos] = useState();
@@ -77,7 +77,7 @@ export const Profile = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   useEffect(() => {
     const shouldShowIntro = localStorage.getItem("showIntro") === "true";
@@ -106,10 +106,10 @@ export const Profile = () => {
   const productImgUrl = "https://ashleylem.pythonanywhere.com/product/images/";
   const apiVideoUrl = "https://ashleylem.pythonanywhere.com/videos/";
 
-  function submit() {
-    profileRef.submit();
-    alert("Data stored in database!");
-  }
+  // function submit() {
+  //   profileRef.submit();
+  //   alert("Data stored in database!");
+  // }
 
   const profileRef = useRef();
   const replacePic = useRef();
@@ -123,6 +123,7 @@ export const Profile = () => {
   const handleFileChange2 = (e) => {
     setFile(e.target.files[0]);
     handleReplacePic(e);
+    file()
   };
 
   const handleSubmitPic = (event) => {
@@ -169,6 +170,7 @@ export const Profile = () => {
                     {item.profile_pic ? (
                       <>
                         <img
+                          alt=""
                           className="profile-pic-img"
                           src={profilePic + item.filename}
                         />
@@ -300,20 +302,21 @@ export const Profile = () => {
                         data-bs-toggle="modal"
                         data-bs-target={"#userReview" + index}
                       >
-                        { isMP4? (<VideoImageThumbnail
+                        {isMP4 ? (<VideoImageThumbnail
                           videoUrl={apiVideoUrl + item.filename}
                           thumbnailHandler={(thumbnail) =>
                             console.log(thumbnail)
                           }
                           className="review-thumbnail "
                           alt="my test video"
-                        />):
-                        <div className="react-video-thumbnail-image">
-                      <img className="review-thumbnail" src={productImgUrl + array[0]}>
-                      </img></div>
-                      }
+                        />) :
+                          <div className="react-video-thumbnail-image">
+                            <img alt="" className="review-thumbnail" src={productImgUrl + array[0]}>
+                            </img></div>
+                        }
                         <div className="d-flex">
                           <img
+                            alt=""
                             className="review-img pe-2 pt-2"
                             src={productImgUrl + array[0]}
                           ></img>
@@ -338,22 +341,22 @@ export const Profile = () => {
                       >
                         <div className="modal-dialog modal-lg modal-dialog-scrollable">
                           <div className="modal-content">
-                          {isMP4 ? 
-                            <video
-                              className="videoDisplay"
-                              type="video/mp4"
-                              src={apiVideoUrl + item.filename}
-                              controls
-                            />:
-                            <img src={apiVideoUrl+item.filename}></img>
-                          
-                          }
+                            {isMP4 ?
+                              <video
+                                className="videoDisplay"
+                                type="video/mp4"
+                                src={apiVideoUrl + item.filename}
+                                controls
+                              /> :
+                              <img alt="" src={apiVideoUrl + item.filename}></img>
+
+                            }
 
                             <div className="modal-header">
                               <h5 className="modal-title">
-                               {item.name}{" "}
+                                {item.name}{" "}
                               </h5>
-                              </div><div>
+                            </div><div>
                               <div className="modal-body">
                                 <p className="card-text">{item.description}</p>
                               </div>
@@ -400,7 +403,7 @@ export const Profile = () => {
                 {userProducts?.map((item, index) => {
                   if (index <= 4) {
                     return (
-                      <>
+                      <div>
                         <div className="previews-container rounded col-lg-6 mb-2 pr-lg-1">
                           <img
                             className=" modal-img-button p-0 img-fluid rounded"
@@ -428,7 +431,7 @@ export const Profile = () => {
                               >
                                 <div className="carousel-indicators">
                                   {item.filename.map((image, index) => {
-                                    if (index == 0) {
+                                    if (index === 0) {
                                       return (
                                         <button
                                           type="button"
@@ -453,7 +456,7 @@ export const Profile = () => {
                                 </div>
                                 <div className="carousel-inner">
                                   {item.filename.map((image, index) => {
-                                    if (index == 0) {
+                                    if (index === 0) {
                                       console.log(image);
                                       return (
                                         <div className=" carousel-item  active">
@@ -537,9 +540,10 @@ export const Profile = () => {
                             </div>
                           </div>
                         </div>
-                      </>
+                      </div>
                     );
-                  }
+                  }else {
+                    return null;}
                 })}
               </div>
             </div>

@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react'
+import React from 'react'
 import "@fontsource/playfair-display"
 import "@fontsource/abril-fatface"
 import "@fontsource/open-sans"
@@ -11,11 +11,11 @@ import Collections from './Components/Collections/Collections';
 import Template from './Components/Template';
 import { ProductDisplay } from './Components/ProductDisplay/ProductDisplay';
 import Wishlist from './Components/Wishlist/Wishlist';
-import Cart from './Components/Cart/Cart';
+// import Cart from './Components/Cart/Cart';
 import Cart1 from './Components/Cart/Cart-1.jsx' 
 import Checkout from './Components/Checkout/Checkout';
 import Fulfilment from './Components/Fulfilment';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import { UserProducts } from './Components/UserProducts/UserProducts';
 import { SubCatDisplay } from './Components/ProductDisplaySub/ProductDisplaySub';
 import { UserVideos } from './Components/UserVideos/UserVideos';
@@ -29,10 +29,10 @@ import { ProductDetail } from './Components/ProductDetail/ProductDetail';
 import { Signin } from './Components/Login-Register/Signin';
 import { Signup } from './Components/Login-Register/Signup'
 import { Video } from './Components/VideoPage/video';
-import Footer from './Components/Footer/Footer'
+// import Footer from './Components/Footer/Footer'
 import Nav from './Components/Nav/Nav'
-import { get_product_details } from './asosApi';
-import { sort_items } from './asosApi';
+// import { get_product_details } from './asosApi';
+// import { sort_items } from './asosApi';
 import { Women } from './Components/Womens/Womens';
 import { Profile } from './Components/Profile/Profile';
 import {Men} from './Components/Mens/Mens';
@@ -41,11 +41,11 @@ import Hero from './Components/Hero/Hero';
 
 
 function App() {
-  const [currentForm, setCurrentForm] = useState('login');
+  // const [currentForm, setCurrentForm] = useState('login');
 
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
+  // const toggleForm = (formName) => {
+  //   setCurrentForm(formName);
+  // }
 
   return (
     <>

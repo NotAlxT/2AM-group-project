@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useContext } from "react";
 import { Context } from "../../Store/appContext";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
 import logo from "../../Images/logo.png";
 
@@ -49,6 +49,7 @@ export const Signin = () => {
                     <form className="form" onSubmit={handleSubmit}>
                       <div className="d-flex align-items-center mb-3 pb-1">
                         <img
+                        alt=""
                           className="signin-logo fw-bold m-auto"
                           src={logo}
                         />

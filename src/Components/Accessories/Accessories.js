@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { Context } from "../../Store/appContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart} from "@fortawesome/free-solid-svg-icons";
@@ -79,7 +79,7 @@ useEffect(()=>{
                       };
                       actions.add_to_wishlist(newItem);
 
-                      if (store.isAuthenticated == true) {
+                      if (store.isAuthenticated === true) {
                         alert("Sucessfully added!");
                       } else {
                         alert("Please Login");

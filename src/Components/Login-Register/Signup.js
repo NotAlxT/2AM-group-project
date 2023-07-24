@@ -1,4 +1,4 @@
-import React , { useRef } from "react";
+import React, { useRef } from "react";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../Store/appContext";
@@ -31,179 +31,182 @@ export const Signup = () => {
 
   const send_code = useRef();
   // Handle international prefixes, format phone input field
-    // Uses intl-tel-input library
-    const phoneInputField = document.querySelector("#phone_number");
-    // const phoneInput = window.intlTelInput(phoneInputField, {
-    //   // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-    //   preferredCountries: ["us", "co", "in", "de"],
-    //   utilsScript:
-    //     "https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/build/js/utils.js",
-    // });
+  // Uses intl-tel-input library
+  // const phoneInputField = document.querySelector("#phone_number");
+  // const phoneInput = window.intlTelInput(phoneInputField, {
+  //   // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+  //   preferredCountries: ["us", "co", "in", "de"],
+  //   utilsScript:
+  //     "https://cdn.jsdelivr.net/npm/intl-tel-input@17.0.13/build/js/utils.js",
+  // });
 
-    function selectedChannel() {
-      const checked = "input[name='channel']:checked";
-      return document.querySelector(checked).value;
-    }
+  function selectedChannel() {
+    const checked = "input[name='channel']:checked";
+    return document.querySelector(checked).value;
+  }
 
-    //const phoneInputDiv = document.getElementById("phone-input");
-    const emailInputDiv = document.getElementById("email-input");
+  //const phoneInputDiv = document.getElementById("phone-input");
+  // const emailInputDiv = document.getElementById("email-input");
 
-    // function showEmailInput() {
-    //   phoneInputDiv.style.display = "none";
-    //   emailInputDiv.style.display = "block";
-    // }
+  // function showEmailInput() {
+  //   phoneInputDiv.style.display = "none";
+  //   emailInputDiv.style.display = "block";
+  // }
 
-    // function showPhoneNumberInput() {
-    //   phoneInputDiv.style.display = "block";
-    //   emailInputDiv.style.display = "none";
-    // }
+  // function showPhoneNumberInput() {
+  //   phoneInputDiv.style.display = "block";
+  //   emailInputDiv.style.display = "none";
+  // }
 
-    const statusSpan = document.getElementById("status");
-    const modalStatusSpan = document.getElementById("modal-status");
+  const statusSpan = document.getElementById("status");
+  const modalStatusSpan = document.getElementById("modal-status");
 
-    function showModalStatus(message, options = {color: "gray"}) {
-      modalStatusSpan.style.color = options.color;
-      modalStatusSpan.textContent = message;
-    }
+  function showModalStatus(message, options = { color: "gray" }) {
+    modalStatusSpan.style.color = options.color;
+    modalStatusSpan.textContent = message;
+  }
 
-    function showError(error) {
-      console.error(error);
-      showStatus(error, { color: "#a94442" });
-    }
+  function showError(error) {
+    console.error(error);
+    showStatus(error, { color: "#a94442" });
+  }
 
-    function showStatus(message, options = { color: "gray" }) {
-      statusSpan.style.color = options.color;
-      statusSpan.textContent = message;
-    }
+  function showStatus(message, options = { color: "gray" }) {
+    statusSpan.style.color = options.color;
+    statusSpan.textContent = message;
+  }
 
-    function clearStatus() {
-      statusSpan.textContent = "";
-      modalStatusSpan.textContent = "";
-    }
+  function clearStatus() {
+    statusSpan.textContent = "";
+    modalStatusSpan.textContent = "";
+  }
 
-    const modal = document.getElementById("otp-modal");
-    var to;
+  const modal = document.getElementById("otp-modal");
+  var to;
 
-    async function sendOtp(event) {
-      event.preventDefault();
+  async function sendOtp(event) {
+    event.preventDefault();
 
-      const locale = document.getElementById("select-language").value;
-      const channel = selectedChannel();
+    const locale = document.getElementById("select-language").value;
+    const channel = selectedChannel();
 
-      let statusMessage =
-        channel == "call" ? "☎️ calling..." : "Sending verification code...";
-      showStatus(statusMessage);
+    let statusMessage =
+      channel === "call" ? "☎️ calling..." : "Sending verification code...";
+    showStatus(statusMessage);
 
-      // to =
-      //   channel == "email"
-      //     ? document.getElementById("email").value
-      //     : phoneInput.getNumber();
+    // to =
+    //   channel == "email"
+    //     ? document.getElementById("email").value
+    //     : phoneInput.getNumber();
 
-      const data = new URLSearchParams();
-      data.append("channel", channel);
-      data.append("locale", locale);
-      data.append("to", to);
+    const data = new URLSearchParams();
+    data.append("channel", channel);
+    data.append("locale", locale);
+    data.append("to", to);
 
-      try {
-        const response = await fetch("./start-verify", {
-          method: "POST",
-          body: data,
-        });
+    try {
+      const response = await fetch("./start-verify", {
+        method: "POST",
+        body: data,
+      });
 
-        const json = await response.json();
+      const json = await response.json();
 
-        if (response.status == 429) {
-          clearStatus();
-          modal.style.display = "block";
-          showModalStatus(
-            `You have attempted to verify '${to}' too many times. If you received a code, enter it in the form. Otherwise, please wait 10 minutes and try again.`,
-            {color: "#a94442"}
-          );
-        } else if (response.status >= 400) {
-          clearStatus();
-          showError(json.error);
-        } else {
-          modal.style.display = "block";
-          if (json.success) {
-            showStatus(`Sent verification code to ${to}`);
-          } else {
-            showError(json.error);
-          }
-        }
-      } catch (error) {
-        console.error(error);
-        showError(`Something went wrong while sending code to ${to}.`);
-      }
-    }
-
-    // document
-    //   .getElementById("send_code")
-    //   .addEventListener("submit", (event) => sendOtp(event));
-
-      //add event listener using ref
-
-    async function checkOtp(event) {
-      event.preventDefault();
-      let code = document.getElementById("code");
-      showModalStatus(`Checking code ${code.value}...`);
-
-      const data = new URLSearchParams();
-      data.append("to", to);
-      data.append("code", code.value);
-
-      try {
-        const response = await fetch("./check-verify", {
-          method: "POST",
-          body: data,
-        });
-
-        const json = await response.json();
-
+      if (response.status === 429) {
+        clearStatus();
+        modal.style.display = "block";
+        showModalStatus(
+          `You have attempted to verify '${to}' too many times. If you received a code, enter it in the form. Otherwise, please wait 10 minutes and try again.`,
+          { color: "#a94442" }
+        );
+      } else if (response.status >= 400) {
+        clearStatus();
+        showError(json.error);
+      } else {
+        modal.style.display = "block";
         if (json.success) {
-          showModalStatus("Verification success!", {color: "green"});
-          code.value = "";
+          showStatus(`Sent verification code to ${to}`);
         } else {
-          showModalStatus("Incorrect token!", {color: "#a94442"});
-          code.value = "";
+          showError(json.error);
         }
-      } catch (error) {
-        console.error(error);
-        showModalStatus("Something went wrong!");
-        code.value = "";
       }
+    } catch (error) {
+      console.error(error);
+      showError(`Something went wrong while sending code to ${to}.`);
     }
+  }
 
-    // let checkCode = document.getElementById("check-code");
-    // checkCode.addEventListener("submit", (event) => checkOtp(event));
+  // document
+  //   .getElementById("send_code")
+  //   .addEventListener("submit", (event) => sendOtp(event));
 
-    // let closeButton = document.getElementById("close");
-    // closeButton.addEventListener("click", () => {
-    //   clearStatus();
-    //   modal.style.display = "none";
-    // });
+  //add event listener using ref
 
-    window.onclick = function (event) {
-      switch (event.target.id) {
-        case "otp-modal":
-          modal.style.display = "none";
-          clearStatus();
-          break;
-        case "channel-email":
-          //showEmailInput();
-          break;
-        case "channel-sms":
-          //showPhoneNumberInput();
-          break;
-        case "channel-whatsapp":
-          //showPhoneNumberInput();
-          break;
-        case "channel-call":
-          //showPhoneNumberInput();
-          break;
-      }
-    };
+  // async function checkOtp(event) {
+  //   event.preventDefault();
+  //   let code = document.getElementById("code");
+  //   showModalStatus(`Checking code ${code.value}...`);
 
-    // end twilio code
+  //   const data = new URLSearchParams();
+  //   data.append("to", to);
+  //   data.append("code", code.value);
+
+  //   try {
+  //     const response = await fetch("./check-verify", {
+  //       method: "POST",
+  //       body: data,
+  //     });
+
+  //     const json = await response.json();
+
+  //     if (json.success) {
+  //       showModalStatus("Verification success!", {color: "green"});
+  //       code.value = "";
+  //     } else {
+  //       showModalStatus("Incorrect token!", {color: "#a94442"});
+  //       code.value = "";
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     showModalStatus("Something went wrong!");
+  //     code.value = "";
+  //   }
+  // }
+
+  // let checkCode = document.getElementById("check-code");
+  // checkCode.addEventListener("submit", (event) => checkOtp(event));
+
+  // let closeButton = document.getElementById("close");
+  // closeButton.addEventListener("click", () => {
+  //   clearStatus();
+  //   modal.style.display = "none";
+  // });
+
+  window.onclick = function (event) {
+    switch (event.target.id) {
+      case "otp-modal":
+        modal.style.display = "none";
+        clearStatus();
+        break;
+      case "channel-email":
+        //showEmailInput();
+        break;
+      case "channel-sms":
+        //showPhoneNumberInput();
+        break;
+      case "channel-whatsapp":
+        //showPhoneNumberInput();
+        break;
+      case "channel-call":
+        //showPhoneNumberInput();
+        break;
+      default:
+        // Code to handle any other cases or a fallback action.
+        break;
+    }
+  };
+
+  // end twilio code
 
   return (
     <div>
@@ -224,6 +227,7 @@ export const Signup = () => {
                     <form className="form" onSubmit={handleSubmit}>
                       <div class="d-flex align-items-center mb-3 pb-1">
                         <img
+                        alt=""
                           className="signin-logo fw-bold m-auto"
                           src={logo}
                         />
@@ -286,46 +290,46 @@ export const Signup = () => {
                         </button>
                       </div>
                       <Link to="/Signin">
-                       <button className="logInButton2"> Already have an account? Login here! </button>
-                         </Link>
+                        <button className="logInButton2"> Already have an account? Login here! </button>
+                      </Link>
                     </form>
 
-                     {/* start of new code */}
+                    {/* start of new code */}
 
-      <form ref={send_code} onSubmit={(event) => sendOtp(event)}>
-            <p>Select your channel:</p>
-            <div>
-              <input
-                type="radio"
-                name="channel"
-                id="channel-sms"
-                value="sms"
-                defaultChecked
-              />
-              <label htmlFor="channel-sms">SMS</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="channel"
-                id="channel-whatsapp"
-                value="whatsapp"
-              />
-          
-              <label htmlFor="channel-email">Email</label>
-            </div>
-            <div id="phone-input">
-              <p>Enter your phone number:</p>
-              <input type="tel" id="phone_number" />
-            </div>
-            <div id="email-input">
-              <p>Enter your email:</p>
-              <input type="email" id="email" />
-            </div>
-            <input type="submit" value="Get a one-time passcode" />
-            {/* <span id="status" className="status"></span> */}
-          </form>
-      {/* end new code */}
+                    <form ref={send_code} onSubmit={(event) => sendOtp(event)}>
+                      <p>Select your channel:</p>
+                      <div>
+                        <input
+                          type="radio"
+                          name="channel"
+                          id="channel-sms"
+                          value="sms"
+                          defaultChecked
+                        />
+                        <label htmlFor="channel-sms">SMS</label>
+                      </div>
+                      <div>
+                        <input
+                          type="radio"
+                          name="channel"
+                          id="channel-whatsapp"
+                          value="whatsapp"
+                        />
+
+                        <label htmlFor="channel-email">Email</label>
+                      </div>
+                      <div id="phone-input">
+                        <p>Enter your phone number:</p>
+                        <input type="tel" id="phone_number" />
+                      </div>
+                      <div id="email-input">
+                        <p>Enter your email:</p>
+                        <input type="email" id="email" />
+                      </div>
+                      <input type="submit" value="Get a one-time passcode" />
+                      {/* <span id="status" className="status"></span> */}
+                    </form>
+                    {/* end new code */}
                   </div>
                 </div>
               </div>
@@ -335,6 +339,6 @@ export const Signup = () => {
       </div>
     </div>
 
-    
+
   );
 };

@@ -10,7 +10,7 @@ import fulfil from '../Images/on-way.gif'
 function Fulfilment() {
     return (
       <>
-      <center><img src ={fulfil} /></center>
+      <center><img alt='' src ={fulfil} /></center>
       </>
     )
 }

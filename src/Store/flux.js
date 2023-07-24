@@ -201,7 +201,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       delete_cart_item: (product_id) => {
         const token = localStorage.getItem("jwt-token");
         const userId = localStorage.getItem("user-id");
-        const store = getStore();
+        // const store = getStore();
         const response = fetch(
           "https://ashleylem.pythonanywhere.com/Cart/" +
             userId +
@@ -223,7 +223,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       clear_cart: () => {
         const token = localStorage.getItem("jwt-token");
         const userId = localStorage.getItem("user-id");
-        const store = getStore();
+        // const store = getStore();
         const response = fetch(
           "https://ashleylem.pythonanywhere.com/Cart/" +
             userId +
@@ -248,7 +248,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             
           }
         );
-       
+        const data = await response.json();
+        return data;
       },
       add_to_purchases: async (a) => {
         const token = localStorage.getItem("jwt-token");
@@ -417,6 +418,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             
           }
         );
+        const data = await response.json()
+        return data
       },
       get_sales: async(userId)=>{
         const response = await fetch(
