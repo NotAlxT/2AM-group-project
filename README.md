@@ -3,6 +3,8 @@
 Link to Website 
 https://2amproject.netlify.app/
 
+#Note
+first project major group porject. Still has bugs to be worked on.
 
 ## Author
 
